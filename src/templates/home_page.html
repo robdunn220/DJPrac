@@ -17,9 +17,16 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          {{ content }}
+          <p>{{ content }}</p>
         </div>
       </div>
+      {% if request.user.is_authenticated %}
+      <div class="row">
+        <div class="col">
+          {{ logged_in_content }}
+        </div>
+      </div>
+      {% endif %}
     </div>
 
     <!-- Optional JavaScript -->
