@@ -49,14 +49,17 @@ def login_page(request):
             return redirect("/")
         else:
             print("Error")
-            return redirect("/login")
+            return redirect("/register")
     return render(request, "auth/login.html", context)
 
 def register_page(request):
     form = RegistrationForm(request.POST or None)
+    context = {
+        "form": form
+    }
     if form.is_valid():
         username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         print(form.cleaned_data)
-    return render(request, "auth/register.html", {})
+    return render(request, "auth/register.html", context)
