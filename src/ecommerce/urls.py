@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.conf.urls import url
 from .views import home_page, about_page, contact_page, login_page, register_page
 
+# Initializes URL's
 urlpatterns = [
     url(r'^$', home_page),
     url(r'^about/$', about_page),
