@@ -26,3 +26,6 @@ urlpatterns = [
     url(r'^register/$', register_page),
     url(r'^admin/', admin.site.urls),
 ]
+
+# if settings.DEBUG:
+#     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

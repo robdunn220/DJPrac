@@ -7,7 +7,7 @@ from .forms import ContactForm, LoginForm, RegistrationForm
 # Renders the information on the home page
 def home_page(request):
     context = {
-        "title":"Hello World!",
+        "title":"Simply Morgan",
         "content":"Welcome home",
     }
     if request.user.is_authenticated:
@@ -72,4 +72,5 @@ def register_page(request):
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         new_user = User.objects.create_user(username, email, password)
+        return redirect("/login")
     return render(request, "auth/register.html", context)
