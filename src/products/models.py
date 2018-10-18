@@ -14,9 +14,19 @@ def upload_image_path(instance, filename):
     final_filename = f'{new_filename}{ext}'
     return f"products/{final_filename}"
 
-class ProductManager(models.Manager):
+class ProductQuerySet(models.query.QuerySet):
+    def active(self):
+        return self.filter(active=True)
     def featured(self):
-        return self.get_queryset().filter(featured=True)
+        return self.filter(featured=True, active=True)
+
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db)
+    def all(self):
+        return self.get_queryset().active()
+    def featured(self):
+        return self.get_queryset().featured()
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
         if qs.count() == 1:
@@ -25,11 +35,12 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
-    # upload_image_path = f'products/{title}'
+    slug = models.SlugField(blank=True)
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=7, default=0.00)
     image = models.ImageField(upload_to=upload_image_path , null=True, blank=True)
     featured = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     objects = ProductManager()
 
