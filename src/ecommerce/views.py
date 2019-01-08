@@ -10,6 +10,7 @@ def home_page(request):
         "title":"Simply Morgan",
         "content":"Welcome home",
     }
+    # Display content upon login authentication
     if request.user.is_authenticated:
         context["logged_in_content"] = "Yes"
     return render(request, "home_page.html", context)
